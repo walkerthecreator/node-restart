@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>hello from server</h1>
+    <h2> <%= userData.name %> </h2>
+    <p> <%= userData.gender %> </p>
+    
+
+
+    <table border="2" cellpadding="10">
+        <thead>
+            <th>Name</th>
+            <th>roll</th>
+            <th>Gender</th>
+        </thead>
+        <tbody>
+            <% for(let i=0;i<users.length ; i++) { %>
+               <% if(users[i].gender == "male") { %>
+                <tr style="background-color: rgb(169, 154, 255);">
+                    <% } else { %>
+                <tr style="background-color: rgb(253, 228, 232);">
+                    <% } %>
+
+                <td><%= users[i].name %></td>
+                <td><%= users[i].roll %></td>
+                <td><%= users[i].gender %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+                    
+        </body>
+</html>
