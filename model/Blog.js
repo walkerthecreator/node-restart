@@ -12,9 +12,12 @@ const blogSchema = mongoose.Schema({
     category : {
         type : String ,
         required : true
-    } , 
-    postedBy : {
-
-    }
+    } 
     
+} , {
+    timestamps : true
 })
+
+const Blog = mongoose.model("blogs" , blogSchema)
+
+module.exports = Blog

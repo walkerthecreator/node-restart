@@ -1,8 +1,9 @@
+const Blog = require("../model/Blog")
 
-const arr = []
 
-function getBlogs(req , res){
-    res.render('blogs' , { blog : arr })
+async function getBlogs(req , res){
+    const blogs = await Blog.find()
+    res.render('blogs' , { blog : blogs })
 }
 
 
@@ -10,9 +11,9 @@ function getAddNewBlog(req , res){
     res.status(200).render('add_new_blog')
 }
 
-function postAddNewBlog(req , res){
-    const { title , desc } = req.body
-    arr.push(req.body)
+async function postAddNewBlog(req , res){
+    const { title , desc , category } = req.body
+    const newBlog = await Blog.create({ title , description : desc , category })
     res.redirect('/blog')
 }
 
