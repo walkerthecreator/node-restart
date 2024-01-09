@@ -4,11 +4,13 @@ const path = require("path")
 const dotenv = require("dotenv").config()
 const port  =  process.env.PORT || 5000
 const db = require("./config/Db")
+const cookieParser = require("cookie-parser")
+const auth = require("./middleware/auth.middleware")
 
 
 server.use(express.json())
 server.use(express.urlencoded({ extended : false }))
-
+server.use(cookieParser())
 
 server.set("view engine" , "ejs")
 server.set("views" , path.join(__dirname ,  "/views"))
@@ -22,12 +24,10 @@ server.get('/' , (req , res) => {
     res.render("basic")
 })
 
-server.use('/login' , require('./routes/login'))
-server.use('/signup' ,  require('./routes/signup'))
-
+server.use('/auth', auth , require('./routes/auth'))
 
 // blog
-server.use('/blog' , require("./routes/blog"))
+server.use('/blog'  ,  require("./routes/blog"))
 
 
 server.listen(port , ()=>{

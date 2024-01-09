@@ -2,8 +2,14 @@ const Blog = require("../model/Blog")
 
 
 async function getBlogs(req , res){
-    const blogs = await Blog.find()
-    res.render('blogs' , { blog : blogs })
+    const user = req.cookies.user
+    if(user){
+        const blogs = await Blog.find()
+        return res.render('blogs' , { blog : blogs })
+    }
+    else{
+        res.redirect('/auth/signup')
+    }
 }
 
 async function deleteBlog(req , res){

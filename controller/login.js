@@ -6,9 +6,17 @@ function getLogin( req , res){
 }
 
 // @post
-function postLogin(){
-    console.log(req.body)
-    res.send("got it ")
+async function postLogin(){
+    const { email , password } = req.body
+    const checkingUser  = await User.findOne({ email })
+    
+    if( ! checkingUser){
+        return res.render("signup")
+    }
+
+    
+
+
 }
 
 module.exports = { getLogin , postLogin }
