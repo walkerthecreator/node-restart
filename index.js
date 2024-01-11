@@ -5,7 +5,7 @@ const dotenv = require("dotenv").config()
 const port  =  process.env.PORT || 5000
 const db = require("./config/Db")
 const cookieParser = require("cookie-parser")
-const auth = require("./middleware/auth.middleware")
+const verifyLogin =  require("./middleware/auth.middleware")
 
 
 server.use(express.json())
@@ -24,10 +24,10 @@ server.get('/' , (req , res) => {
     res.render("basic")
 })
 
-server.use('/auth', auth , require('./routes/auth'))
+server.use('/auth' , require('./routes/auth'))
 
 // blog
-server.use('/blog'  ,  require("./routes/blog"))
+server.use('/blog' , verifyLogin ,  require("./routes/blog"))
 
 
 server.listen(port , ()=>{

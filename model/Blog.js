@@ -12,7 +12,11 @@ const blogSchema = mongoose.Schema({
     category : {
         type : String ,
         required : true
-    } 
+    }  ,
+    postedBy : {
+        type : mongoose.Schema.Types.ObjectId ,
+        ref : "users"
+    }
     
 } , {
     timestamps : true

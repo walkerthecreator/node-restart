@@ -2,14 +2,10 @@ const Blog = require("../model/Blog")
 
 
 async function getBlogs(req , res){
-    const user = req.cookies.user
-    if(user){
-        const blogs = await Blog.find()
-        return res.render('blogs' , { blog : blogs })
-    }
-    else{
-        res.redirect('/auth/signup')
-    }
+    const email = req.user.email
+    const blogs = await Blog.find()
+    return res.render('blogs' , { blog : blogs , user : email })
+    
 }
 
 async function deleteBlog(req , res){
@@ -24,8 +20,13 @@ function getAddNewBlog(req , res){
 
 async function postAddNewBlog(req , res){
     const { title , desc , category } = req.body
-    const newBlog = await Blog.create({ title , description : desc , category })
+    const userId = req.user.id
+    const newBlog = await Blog.create({ title , description : desc , category , postedBy : userId })
     res.redirect('/blog')
+}
+
+async function getMyBlogs(req , res ){
+    // const userEmail = await ()
 }
 
 module.exports = { getAddNewBlog , postAddNewBlog , getBlogs , deleteBlog}

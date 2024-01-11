@@ -1,15 +1,16 @@
+const getDataFromToken = require("../utils/getDataFromToken")
 
 
-function auth(req , res , next ){
-
-    const {user} = req.cookies
-// next -> blog
-    if( user ){
-        console.log("already logged in")
-        return res.redirect('/blog')
+function verifyLogin(req , res , next ){
+    const token = req.cookies.token
+    
+    if(!token){
+        return res.redirect("/auth/signup")
     }
 
+    const decoded = getDataFromToken(token)
+    req.user = decoded
     next()
 }
 
-module.exports = auth
+module.exports = verifyLogin
