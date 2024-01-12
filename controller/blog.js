@@ -3,10 +3,14 @@ const Blog = require("../model/Blog")
 
 async function getBlogs(req , res){
     const email = req.user.email
-    const blogs = await Blog.find()
-    return res.render('blogs' , { blog : blogs , user : email })
-    
+
+    const blogs = await Blog.find().populate("postedBy")
+    console.log("blogs available" , blogs)
+    return res.render('blogs' , { blog : blogs  })
 }
+
+
+// .select("-phone")
 
 async function deleteBlog(req , res){
     const id = req.params.id
@@ -26,7 +30,15 @@ async function postAddNewBlog(req , res){
 }
 
 async function getMyBlogs(req , res ){
+    const id = req.user.id
+    const { email , name } = req.user // coming from req set my middleware
+    
+    const userBlogs =await  Blog.find({ postedBy : id })
+    // return res.send(userBlogs) ;
+
+    return res.render("MyBlogs", { user : { name , email  }  , blogs : userBlogs })
+
     // const userEmail = await ()
 }
 
-module.exports = { getAddNewBlog , postAddNewBlog , getBlogs , deleteBlog}
+module.exports = { getAddNewBlog , postAddNewBlog , getBlogs , deleteBlog , getMyBlogs}

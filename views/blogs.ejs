@@ -2,7 +2,7 @@
     <%- include("partials/head") %>
     <%- include("partials/nav") %>
 
-    <div class="container ">
+    <div class="container">
 
         <div class="w-50 mx-auto d-flex my-4 align-items-center">
             <h2>write your own blog today.</h2>
@@ -15,10 +15,11 @@
         <% for(let i of blog){ %>
             <div class="card my-2">
                 <div class="card-body"   >
-                    <h3><%= i.title %></h3>
-                    <a href="blog/delete/<%= i._id%>">delete</a>
+                        <h3><%= i.title %></h3>
                     <p><%= i.description %></p>
                     <span class="badge bg-dark "><%= i.category %></span>
+                    <br>
+                    <span class="underline"> created by : <%= i.postedBy.email %> </span>
                 </div>
             </div>
         <% } %>
