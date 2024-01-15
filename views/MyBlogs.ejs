@@ -4,7 +4,7 @@
 <div>
     <h1>welcome <%= user.name%></h1>
     <p><%= user.email%></p>
-    <a href="auth/logout">logout</a>
+    <a href="/auth/logout">logout</a>
 </div>
 
 <div class="container">  
@@ -13,8 +13,52 @@
             <div class="card-body"   >
                 <div class="d-flex justify-content-between">
                     <h3><%= i.title %></h3>
-                    <a class="btn bg-danger-subtle text-danger" href="blog/delete/<%= i._id%>">delete</a>
+                    <div>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#custom<%= i._id%>">
+                            update
+                          </button>
+                        <a class="btn bg-danger-subtle text-danger" href="blog/delete/<%= i._id%>">delete</a>
+                    </div>
                 </div>
+
+                <div class="modal fade" id="custom<%= i.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel"><%= i.title %></h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form method="post" action="/blog/myblogs/update">    
+                            <div class="form-floating mb-3">
+                                <input type="text" name="title" value="<%= i.title%>" class="form-control" id="floatingInput" placeholder="" >
+                                <label for="floatingInput">Title</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="text" name="desc" value="<%= i.description %>" class="form-control" id="floatingPassword" placeholder="Password">
+                                <label for="floatingPassword">Description</label>
+                            </div>
+
+                            <input type="text" name="id" value="<%= i._id%>" hidden>
+
+                            <select class="form-select my-3" aria-label="Default select example"  name="category" required>
+                                <option value="">Open this select category</option>
+                                <option value="Technology">Tech</option>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Health">Health & care</option>
+                                <option value="Finance">Finance</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                            <button type="submit" class="btn btn-primary">update</button>
+                        </div>
+                    </form>
+                      </div>
+                    </div>
+                  </div>
+
                 <p><%= i.description %></p>
 
                 <span><%= i.createdAt %></span>

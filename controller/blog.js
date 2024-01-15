@@ -9,7 +9,6 @@ async function getBlogs(req , res){
     return res.render('blogs' , { blog : blogs  })
 }
 
-
 // .select("-phone")
 
 async function deleteBlog(req , res){
@@ -29,6 +28,17 @@ async function postAddNewBlog(req , res){
     res.redirect('/blog')
 }
 
+async function updateMyBlogs(req , res){
+    try{
+        const {title , description , category , id } = req.body
+        const updateBlogs = await Blog.updateOne({_id : id } , { title , description, category  })
+        return res.redirect('/blog/myblogs')
+    }
+    catch(err){
+        return res.status(400).send("something went wrong")
+    }
+}
+
 async function getMyBlogs(req , res ){
     const id = req.user.id
     const { email , name } = req.user // coming from req set my middleware
@@ -41,4 +51,4 @@ async function getMyBlogs(req , res ){
     // const userEmail = await ()
 }
 
-module.exports = { getAddNewBlog , postAddNewBlog , getBlogs , deleteBlog , getMyBlogs}
+module.exports = { getAddNewBlog , postAddNewBlog , getBlogs , deleteBlog , getMyBlogs , updateMyBlogs}
